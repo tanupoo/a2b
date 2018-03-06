@@ -6,8 +6,8 @@ import re
 
 re_def = re.compile("^([\s0-9a-fx,:\.\-]+)$", flags=re.IGNORECASE)
 re_hd = re.compile("^[0-9a-f]{3,8}\s([\s0-9a-f]+).*", flags=re.IGNORECASE)
-re_tcpdump = re.compile("^\s+([\s0-9a-f]+).*", flags=re.IGNORECASE)
-re_gdb = re.compile("^0x[a-f0-9]+:\s+([\s0-9a-fx]+).*", flags=re.IGNORECASE)
+re_tcpdump = re.compile("^[^:]*:?\s+([\s0-9a-f]+).*", flags=re.IGNORECASE)
+re_gdb = re.compile("^\s*0x[a-f0-9]+:\s+([\s0-9a-fx]+).*", flags=re.IGNORECASE)
 
 def usage():
     print('''\

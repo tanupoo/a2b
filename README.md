@@ -57,6 +57,12 @@ like below:
                             a002 e000 5204 0000 0204 05b4 0103 0300
                             0101 080a 05ee 9984 0000 0000
 
+    % tcpdump -nqxi lo0
+    07:12:38.197522 IP 127.0.0.1.56622 > 127.0.0.1.2056: UDP, length 8
+            0x0000:  4500 0024 87d3 0000 4011 0000 7f00 0001
+            0x0010:  7f00 0001 dd2e 0808 0010 fe23 0800 0102
+            0x0020:  b201 0000
+
 ## dgb output
 
 the -gdb option specify the input is the output of the command x of gdb(1)
@@ -69,3 +75,4 @@ like below:
     0xbfbff340:     0x2c    0x3f    0x08    0x08    0x00    0x00    0x00    0x00
     0xbfbff348:     0x00    0x00    0x00    0x00    0x00    0x00    0x00    0x00
     0xbfbff350:     0x64    0xf3    0xbf    0xbf    0x00    0x00    0x00    0x00
+
