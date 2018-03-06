@@ -5,7 +5,12 @@ a hex string to binary converter in perl and python.
 
 ## usage
 
-a2b [-hd|-tcpdump|-gdb]
+    a2b [-hd|-tcpdump|-gdb|-h]
+
+for example,
+
+    % echo "74 65 73 74 0A" | ./a2b
+    test
 
 ## string format
 
