@@ -1,9 +1,9 @@
 
 test()
 {
-    echo "check $1"
-    ret=`echo "$1" | $cmd`
-    if [ ${ret} = "test" ] ; then
+    echo "check $2"
+    ret=`echo "$2" | $cmd`
+    if [ ${ret} = "$1" ] ; then
         echo OK
     else
         echo NG
@@ -16,14 +16,16 @@ else
     cmd=$1
 fi
 
-test "74 65 73 74"
-test "74657374"
-test "7465 7374 "
-test "74,65,73,74"
-test "74.65.73.74"
-test "74:65:73:74"
-test "74-65-73-74"
-test "0x7465,0x7374"
-test "0x74-0x65-0x73-0x74"
-test "0x74 0x65 0x73 0x74"
+test "test" "74 65 73 74"
+test "test" "74657374"
+test "test" "7465 7374 "
+test "test" "74,65,73,74"
+test "test" "74.65.73.74"
+test "test" "74:65:73:74"
+test "test" "74-65-73-74"
+test "test" "0x7465,0x7374"
+test "test" "0x74-0x65-0x73-0x74"
+test "test" "0x74 0x65 0x73 0x74"
+
+#test "60 0a 97 3e"
 
