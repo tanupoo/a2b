@@ -12,15 +12,21 @@ re_gdb = re.compile("^\s*0x[a-f0-9]+:\s+([\s0-9a-fx]+).*", flags=re.IGNORECASE)
 
 def usage():
     print('''\
-Usage: a2b [-h]
+Usage: a2b [-h] [-p]
     it guesses what the text is from either hexdump, tcpdump, gdb, or other.
     e.g. echo "0x74 0x65 0x73 0x74 0x0A" | a2b
+    -p: python bytes type.
 ''')
     exit(0)
 
-if len(sys.argv) == 2 and sys.argv[1] == "-h":
-    usage()
+f_str = False
+if len(sys.argv) == 2:
+    if sys.argv[1] == "-h":
+        usage()
+    elif sys.argv[1] == "-p":
+        f_str = True
 
+all_data = bytes()
 for line in sys.stdin:
     v = None
     for recom in [re_hd, re_tcpdumpx, re_gdb]:
@@ -46,6 +52,13 @@ for line in sys.stdin:
         v = re.sub(r"[,:\-\.\s\n]", "", v)
         v = v.replace("0x","")
         if len(v)%2 == 0:
-            for i in range(0,len(v),2):
-                s = struct.pack("B", int(v[i:i+2],16))
-                sys.stdout.buffer.write(s)
+            if f_str:
+                for i in range(0,len(v),2):
+                    all_data += struct.pack("B", int(v[i:i+2],16))
+            else:
+                for i in range(0,len(v),2):
+                    s = struct.pack("B", int(v[i:i+2],16))
+                    sys.stdout.buffer.write(s)
+# flush all_data
+if f_str:
+    print(all_data)
