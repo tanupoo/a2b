@@ -3,10 +3,11 @@
 
 import sys
 import re
+import struct
 
 re_def = re.compile("^([\s0-9a-fx,:\.\-]+)$", flags=re.IGNORECASE)
-re_hd = re.compile("^[0-9a-f]{3,8}\s([\s0-9a-f]+).*", flags=re.IGNORECASE)
-re_tcpdump = re.compile("^[^:]*:?\s+([\s0-9a-f]+).*", flags=re.IGNORECASE)
+re_hd = re.compile("^[0-9a-f]{5,8}\s([\s0-9a-f]+).*", flags=re.IGNORECASE)
+re_tcpdumpx = re.compile("^[^:]+:\s+([\s0-9a-f]+).*", flags=re.IGNORECASE)
 re_gdb = re.compile("^\s*0x[a-f0-9]+:\s+([\s0-9a-fx]+).*", flags=re.IGNORECASE)
 
 def usage():
@@ -22,7 +23,7 @@ if len(sys.argv) == 2 and sys.argv[1] == "-h":
 
 for line in sys.stdin:
     v = None
-    for recom in [re_hd, re_tcpdump, re_gdb]:
+    for recom in [re_hd, re_tcpdumpx, re_gdb]:
         r = recom.match(line)
         if r:
             v = r.group(1)
@@ -42,7 +43,9 @@ for line in sys.stdin:
                 v = "".join(["%02x"%int(i,u) for i in v.split(".")])
     #
     if v:
-        v = re.sub(r"([,:\-\.\s\n]|0x)", "", v)
+        v = re.sub(r"[,:\-\.\s\n]", "", v)
+        v = v.replace("0x","")
         if len(v)%2 == 0:
             for i in range(0,len(v),2):
-                print(chr(int(v[i:i+2],16)), end="")
+                s = struct.pack("B", int(v[i:i+2],16))
+                sys.stdout.buffer.write(s)

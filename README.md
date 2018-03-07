@@ -50,18 +50,20 @@ like below:
 the -hd option specify the input is the output of tcpdump(1)
 like below:
 
+    % tcpdump -nqxi lo0
+    07:12:38.197522 IP 127.0.0.1.56622 > 127.0.0.1.2056: UDP, length 8
+            0x0000:  4500 0024 87d3 0000 4011 0000 7f00 0001
+            0x0010:  7f00 0001 dd2e 0808 0010 fe23 0800 0102
+            0x0020:  b201 0000
+
+the following format is treated in the default parser.
+
     % tcpdump -sx 1500 -nqti lnc0
     92.168.246.128.4158 > 203.178.141.195.110: tcp 0 (DF)
                             4500 003c 7474 4000 4006 b5a8 c0a8 f680
                             cbb2 8dc3 103e 006e e8c8 6f7c 0000 0000
                             a002 e000 5204 0000 0204 05b4 0103 0300
                             0101 080a 05ee 9984 0000 0000
-
-    % tcpdump -nqxi lo0
-    07:12:38.197522 IP 127.0.0.1.56622 > 127.0.0.1.2056: UDP, length 8
-            0x0000:  4500 0024 87d3 0000 4011 0000 7f00 0001
-            0x0010:  7f00 0001 dd2e 0808 0010 fe23 0800 0102
-            0x0020:  b201 0000
 
 ## dgb output
 
